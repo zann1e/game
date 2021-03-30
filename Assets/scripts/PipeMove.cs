@@ -13,7 +13,7 @@ public class PipeMove : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (transform.position.x <= -0.4) 
+		if (transform.position.x <= -6.4) 
 		{
 			Destroy(gameObject);
 		}

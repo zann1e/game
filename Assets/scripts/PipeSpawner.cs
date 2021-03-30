@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PipeSpawner : MonoBehaviour {
 
@@ -16,7 +16,7 @@ public class PipeSpawner : MonoBehaviour {
 
     public void StartSpawning()
     {
-        InvokeRepeating("Spawn", spawnDelay, spawnTime);
+        InvokeRepeating(nameof(Spawn), spawnDelay, spawnTime);
     }
 	
 	
@@ -30,6 +30,7 @@ public class PipeSpawner : MonoBehaviour {
 
 	public void GameOver()
 	{
-		CancelInvoke("Spawn");
+		CancelInvoke(nameof(Spawn));
+		SceneManager.LoadScene(1);
 	}
 }

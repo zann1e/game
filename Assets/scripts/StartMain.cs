@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class StartMain : MonoBehaviour {
 
@@ -80,12 +80,10 @@ public class StartMain : MonoBehaviour {
                         name = c.gameObject.name;
                         print(name);
 
-                        if (name == nowPressBtn.name)
+                        if (name != nowPressBtn.name) continue;
+                        if (name == "start_btn")
                         {
-                            if (name == "start_btn")
-                            {
-                                OnPressStart();
-                            }
+                            OnPressStart();
                         }
                     }
 
@@ -97,8 +95,8 @@ public class StartMain : MonoBehaviour {
         }
     }
 
-    private void OnPressStart()
+    private static void OnPressStart()
     {
-        Application.LoadLevel(1);
+        SceneManager.LoadScene(1);
     }
 }

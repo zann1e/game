@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using DG.Tweening;
 
 public class BirdControl : MonoBehaviour {
@@ -65,38 +64,41 @@ public class BirdControl : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
-		if (other.name == "land" || other.name == "pipe_up" || other.name == "pipe_down")
+		switch (other.name)
 		{
-            if (!dead)
-            {
-                GameObject[] objs = GameObject.FindGameObjectsWithTag("movable");
-                foreach (GameObject g in objs)
-                {
-                    g.BroadcastMessage("GameOver");
-                }
+			case "land":
+			case "pipe_up":
+			case "pipe_down":
+			{
+				if (!dead)
+				{
+					GameObject[] objs = GameObject.FindGameObjectsWithTag("movable");
+					foreach (GameObject g in objs)
+					{
+						g.BroadcastMessage("GameOver");
+					}
 
-                GetComponent<Animator>().SetTrigger("die");
-                AudioSource.PlayClipAtPoint(hit, Vector3.zero);
-            }
+					GetComponent<Animator>().SetTrigger("die");
+					AudioSource.PlayClipAtPoint(hit, Vector3.zero);
+				}
 
 			
 
-			if (other.name == "land")
-			{
-				transform.GetComponent<Rigidbody2D>().gravityScale = 0;
-				transform.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+				if (other.name == "land")
+				{
+					transform.GetComponent<Rigidbody2D>().gravityScale = 0;
+					transform.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
 
-				landed = true;
+					landed = true;
+				}
+
+				break;
 			}
+			case "pass_trigger":
+				scoreMgr.GetComponent<ScoreMgr>().AddScore();
+				AudioSource.PlayClipAtPoint(score, Vector3.zero);
+				break;
 		}
-
-        if (other.name == "pass_trigger")
-        {
-            scoreMgr.GetComponent<ScoreMgr>().AddScore();
-            AudioSource.PlayClipAtPoint(score, Vector3.zero);
-        }
-
-
 	}
 
     public void JumpUp()
