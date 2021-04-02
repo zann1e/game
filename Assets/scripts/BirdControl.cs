@@ -46,6 +46,10 @@ public class BirdControl : MonoBehaviour {
 			{
                 JumpUp();
 			}
+			if (Input.GetButtonDown("Fire2"))
+			{
+				AccelerateRight();
+			}
 		}
 
 		if (!landed)
@@ -98,6 +102,13 @@ public class BirdControl : MonoBehaviour {
 				scoreMgr.GetComponent<ScoreMgr>().AddScore();
 				AudioSource.PlayClipAtPoint(score, Vector3.zero);
 				break;
+			
+			case "coin(Clone)":
+				scoreMgr.GetComponent<ScoreMgr>().AddScore();
+				AudioSource.PlayClipAtPoint(score, Vector3.zero);
+				Debug.Log(other.gameObject.name);
+				Destroy(other.gameObject);
+				break;
 		}
 	}
 
@@ -105,6 +116,12 @@ public class BirdControl : MonoBehaviour {
     {
         transform.GetComponent<Rigidbody2D>().velocity = new Vector2(0, upSpeed);
         AudioSource.PlayClipAtPoint(jumpUp, Vector3.zero);
+    }
+    
+    public void AccelerateRight()
+    {
+	    transform.GetComponent<Rigidbody2D>().velocity = new Vector2(1, upSpeed);
+	    AudioSource.PlayClipAtPoint(jumpUp, Vector3.zero);
     }
 	
 	public void GameOver()

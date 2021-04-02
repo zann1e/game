@@ -7,6 +7,7 @@ public class StartMain : MonoBehaviour {
     public GameObject bird;
     public GameObject land;
     public GameObject back_ground;
+    public GameObject rateButton;
     public Sprite[] back_list;
 
     private GameObject nowPressBtn = null;
@@ -53,9 +54,6 @@ public class StartMain : MonoBehaviour {
         switch (touchPhase)
         {
             case TouchPhase.Began:
-                print(touchPosition);
-                print(worldPos);
-
                 foreach(Collider2D c in Physics2D.OverlapPointAll(worldPos))
                 {
                     name = c.gameObject.name;
@@ -78,13 +76,15 @@ public class StartMain : MonoBehaviour {
                     foreach (Collider2D c in Physics2D.OverlapPointAll(worldPos))
                     {
                         name = c.gameObject.name;
-                        print(name);
+                        Debug.Log(name);
 
                         if (name != nowPressBtn.name) continue;
                         if (name == "start_btn")
                         {
                             OnPressStart();
                         }
+                        c.GetComponent<SpriteRenderer>().material.DOFade(0f, 0.2f);
+
                     }
 
                     nowPressBtn = null;

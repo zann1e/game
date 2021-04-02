@@ -5,7 +5,8 @@ public class PipeSpawner : MonoBehaviour {
 
 	public float spawnTime = 5f;		// The amount of time between each spawn.
 	public float spawnDelay = 3f;		// The amount of time before spawning starts.
-	public GameObject pipe;	
+	public GameObject pipe;
+	public GameObject coin;
 	public float[] heights;
 	
 	
@@ -16,21 +17,30 @@ public class PipeSpawner : MonoBehaviour {
 
     public void StartSpawning()
     {
-        InvokeRepeating(nameof(Spawn), spawnDelay, spawnTime);
+        InvokeRepeating(nameof(SpawnPipe), spawnDelay, spawnTime);
+        InvokeRepeating(nameof(SpawnCoin), 2f, 2f);
     }
 	
 	
-	void Spawn ()
+	void SpawnPipe ()
 	{
 		int heightIndex = Random.Range(0, heights.Length);
 		Vector2 pos = new Vector2(transform.position.x, heights[heightIndex]);
 
 		Instantiate(pipe, pos, transform.rotation);
 	}
+	
+	void SpawnCoin ()
+	{
+		int heightIndex = Random.Range(0, heights.Length);
+		Vector2 pos = new Vector2(transform.position.x, heights[heightIndex]);
+
+		Instantiate(coin, pos, transform.rotation);
+	}
 
 	public void GameOver()
 	{
-		CancelInvoke(nameof(Spawn));
-		SceneManager.LoadScene(1);
+		CancelInvoke(nameof(SpawnPipe));
+		CancelInvoke(nameof(SpawnCoin));
 	}
 }
